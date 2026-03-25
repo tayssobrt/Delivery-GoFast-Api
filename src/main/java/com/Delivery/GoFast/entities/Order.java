@@ -51,4 +51,10 @@ public class Order {
     @Column(name = "order_address", nullable = false)
     private String orderAddress;
 
+    @Column(name = "label")
+    private String label;
+
+    @ManyToOne
+    @JoinColumn(name = "address_id", nullable = false)
+    private Address address;
 }
