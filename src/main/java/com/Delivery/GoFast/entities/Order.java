@@ -38,13 +38,13 @@ public class Order {
     private List<OrderItem> orderItems = new ArrayList<>();
 
     @Column(name = "ordered_at", nullable = false)
-    private LocalDateTime orderedAt;
+    private LocalDateTime orderedAt = LocalDateTime.now();
 
     @Positive
     @Column(name = "order_price", nullable = false)
     private BigDecimal orderPrice;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     @Column(name = "order_status", nullable = false)
     private OrderStatus orderStatus;
 
