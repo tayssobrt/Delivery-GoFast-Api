@@ -21,11 +21,11 @@ public class OrderItemResponse {
     public static OrderItemResponse fromEntity(OrderItem orderItem){
         OrderItemResponse response = new OrderItemResponse();
 
-        response.id = orderItem.getId();
-        response.product = ProductResponse.fromEntity(orderItem.getProduct());
-        response.quantity = orderItem.getQuantity();
-        response.unitPrice = orderItem.getUnitPrice();
-        response.totalPrice = orderItem.getTotalPrice();
+        response.setId(orderItem.getId());
+        response.setProduct(ProductResponse.fromEntity(orderItem.getProduct()));
+        response.setQuantity(orderItem.getQuantity());
+        response.setUnitPrice(orderItem.getUnitPrice());
+        response.setTotalPrice(orderItem.getTotalPrice());
 
         return response;
     }
