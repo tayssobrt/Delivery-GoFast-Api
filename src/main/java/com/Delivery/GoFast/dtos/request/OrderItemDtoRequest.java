@@ -8,5 +8,7 @@ public record OrderItemDtoRequest(
         Long productId,
         @NotNull(message = "Quantity is required")
         @Positive(message = "Quantity must be positive")
-        Integer quantity
+        Integer quantity,
+
+        Boolean active
 ) {}
