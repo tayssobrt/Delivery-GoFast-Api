@@ -1,5 +1,6 @@
 package com.Delivery.GoFast.services;
 
+import com.Delivery.GoFast.exceptions.ProductNotFoundException;
 import com.Delivery.GoFast.mappers.OrderMapper;
 import com.Delivery.GoFast.dtos.request.OrderDtoRequest;
 import com.Delivery.GoFast.dtos.request.OrderItemDtoRequest;
@@ -7,7 +8,7 @@ import com.Delivery.GoFast.entities.Order;
 import com.Delivery.GoFast.entities.Product;
 import com.Delivery.GoFast.enums.OrderStatus;
 import com.Delivery.GoFast.exceptions.OrderNotFoundException;
-import com.Delivery.GoFast.exceptions.OrderNotInReview;
+import com.Delivery.GoFast.exceptions.OrderNotInReviewException;
 import com.Delivery.GoFast.repositories.OrderRepository;
 import com.Delivery.GoFast.repositories.ProductRepository;
 import org.springframework.stereotype.Service;
@@ -53,7 +54,7 @@ public class OrderService {
 
         // * Verifica se todos os produtos existem
         if (products.size() != productIds.size()) {
-            throw new RuntimeException("Some product doesn't exist");
+            throw new ProductNotFoundException("Some product doesn't exist");
         }
 
         products.forEach(p -> {
@@ -67,7 +68,7 @@ public class OrderService {
             Product product = products.stream()
                     .filter(p -> p.getId().equals(item.productId()))
                     .findFirst()
-                    .orElseThrow(() -> new RuntimeException("Product not found"));
+                    .orElseThrow(() -> new ProductNotFoundException("Product not found"));
 
             BigDecimal price = product.getPrice();
             int quantity = item.quantity();
@@ -96,7 +97,7 @@ public class OrderService {
         }
 
         if (orderOptional.get().getOrderStatus() != OrderStatus.REVIEW) {
-            throw new OrderNotInReview("Order is not in review");
+            throw new OrderNotInReviewException("Order is not in review");
         }
 
         orderRepository.delete(orderOptional.get());
